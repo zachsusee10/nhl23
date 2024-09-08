@@ -1,4 +1,6 @@
 NHL24 Contract Evaluation Simulator
+
+
 Overview
 The NHL24 Contract Evaluation Simulator is a Java-based tool designed to predict player performance over the duration of a contract and evaluate if the player is worth the contract value based on various factors. It simulates player stats like goals, assists, points, and overall rating progression, taking into account player type, age, position, and other relevant metrics. This tool can be used to analyze whether a player is expected to meet or exceed the value of their contract over time, helping teams make informed decisions.
 
