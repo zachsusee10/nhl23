@@ -49,7 +49,7 @@ cale makar's expected value in year 1 will equate to a 11.0M dollar contract
 
 ## Disclaimer
 
-This extension is a **work-in-progress** and is not yet feature-complete. It is currently in a **development phase**, with the primary focus being functionality and user experience improvements.
+This project is a **work-in-progress** and is not yet feature-complete. It is currently in a **development phase**, with the primary focus being functionality and user experience improvements.
 
 
 
