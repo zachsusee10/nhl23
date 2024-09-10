@@ -41,9 +41,9 @@ public class contract {
 		double ageModifier = 0;
 		double weightPoints = 0, weightAssists = 0, weightGoals = 0, weightPlusMinus = 0;
 	    if (age < 28) {
-	        ageModifier = (28 - age) * 0.3;  // Exponential increase for lower age
+	        ageModifier = (28 - age) * 0.3; 
 	    } else if (age > 33) {
-	        ageModifier = -(age - 33) * 0.4; // Exponential decrease for higher age
+	        ageModifier = -(age - 33) * 0.4; 
 	    }
 
 	    // Pot modifier based on pot and age
@@ -174,22 +174,21 @@ public class contract {
 
     Random rand = new Random();
 
-    // Adding randomness to age modifier
+    
     if (age<27 || age>33) {
     ageModifier += (rand.nextDouble() * 2 - 1) * 0.3;  
     }
-    // Adding randomness to potModifier
+    
     if (age<=23) {
-    potModifier += (rand.nextDouble() * 2 - 1) * 1; 
+    potModifier += (rand.nextDouble() * 2 - 1) * 1;
     }
-    // Adding randomness to performanceModifier
-    combinedPerformanceModifier += (rand.nextDouble() * 2 - 1) * 0.3; // Random number between -0.1 and 0.1
+   
+    combinedPerformanceModifier += (rand.nextDouble() * 2 - 1) * 0.3;
     
     double stabilityFactor = 1.0;
 
     if (age >= 27 && age <= 33) {
         // Set stability factor to a value less than 1 to reduce the effect of modifiers
-        // For instance, setting it to 0.5 will halve the effect of performance and other modifiers
         stabilityFactor = 0.18;
     }
 
@@ -217,18 +216,18 @@ public class contract {
 
 	    if (pos >= 1 && pos <= 3) {
 	        if (pltype == 1 || pltype == 5) {
-	            pltypeMultiplier = 1.2; // No change
+	            pltypeMultiplier = 1.2; 
 	        } else if (pltype == 2 || pltype == 3) {
 	            pltypeMultiplier = 1.7;
 	        }
-	        posMultiplier = 1.5; // Since it's not specifically mentioned, we're defaulting to 1
+	        posMultiplier = 1.5; 
 	    } else if (pos >= 4 && pos <= 5) {
 	        if (pltype == 1) {
 	            pltypeMultiplier = 0.3;
 	        } else if (pltype == 2) {
 	            pltypeMultiplier = 0.9;
 	        }
-	        posMultiplier = 0.7; // Since it's not specifically mentioned, we're defaulting to 1
+	        posMultiplier = 0.7; 
 	    }
 
 	    // Weighted average
@@ -236,14 +235,14 @@ public class contract {
 	    double weightPregoals = 0.4;
 	    double avg = (normOvr * weightOvr + normPregoals * weightPregoals) * posMultiplier * pltypeMultiplier;
 
-	    // Add randomness
+	    
 	    Random rand = new Random();
         double randomFactor = 0.1 + (1.0 - 0.3) * rand.nextDouble();
 	    int result = (int) (avg * randomFactor * 65);
 
 	    // Cap values to a maximum of 65, and occasionally let them be higher
 	    if (result > 65) {
-	        if (random.nextDouble() < (1.0 / 10.0)) { // 1 in 10 chance
+	        if (random.nextDouble() < (1.0 / 10.0)) { 
 	            result = 65 + (int)(Math.random() * 6);
 	        } else {
 	            result = 65;
@@ -255,7 +254,7 @@ public class contract {
 
 	    
 	public static int assists(int ovr, int preassists, int pos, int pltype) {
-		double normOvr = (ovr - 50.0) / 50.0; // Considering that the lowest ovr is around 50
+		double normOvr = (ovr - 50.0) / 50.0;
         double normPreassists = preassists / 100.0;
         
         // Introduce positional and player type multipliers
@@ -284,14 +283,14 @@ public class contract {
         double avg = (normOvr * weightOvr + normPreassists * weightPreassists) * posMultiplier * pltypeMultiplier;
         
         Random rand = new Random();
-        double randomFactor = 0.1 + (1.0 - 0.3) * rand.nextDouble(); // Random value between 0.3 and 1.0
+        double randomFactor = 0.1 + (1.0 - 0.3) * rand.nextDouble(); 
         
         // Multiplying average with random factor and scaling to 0-100 range
         int result = (int) (avg * randomFactor * 100);
         
      // Cap values to a maximum of 100, and occasionally let them be higher
         if (result > 100) {
-            if (random.nextDouble() < (1.0/10.0)) {  // 1 in 10 chance
+            if (random.nextDouble() < (1.0/10.0)) {  
                 result = 100 + (int)(Math.random()*6);
             } else {
                 result = 100;
@@ -318,7 +317,6 @@ public class contract {
 	    } else if (pos >= 4 && pos <= 5) {
 	        if (pltype == 1) {
 	            performanceScore = computePerformanceScore(points, ovr, 65, 45, 20, 2, 2, 2);
-	            // For this specific scenario, we take into account preplusminus
 	            double plusMinusImprovement = preplusminus * 0.2;
 	            performanceScore = (performanceScore + plusMinusImprovement) / 2;
 	        } else if (pltype == 2) {
@@ -334,7 +332,7 @@ public class contract {
 	    finalScore = Math.min(Math.max(finalScore, -30), 60);  // clip the value to ensure it doesn't exceed the bounds
 
 	    
-	    finalScore += random.nextInt(5) - 2; // random value between -2 to 2
+	    finalScore += random.nextInt(5) - 2; 
 
 	    return (int) finalScore;
 	}
@@ -373,12 +371,11 @@ public class contract {
 		}
 	}
 	public static double EVcalc(int total, int pos, int pltype) {
-		// Define the known data points and initialize variables
 	    int x1 = 0, x2 = 0;
 	    double y1 = 0.0, y2 = 0.0;
-	    double exponentBase = 0.0; // Base for the exponential function
+	    double exponentBase = 0.0; 
 
-	    // Check for "pos" values between 1 and 3
+	    
 	    if (pos >= 1 && pos <= 3) {
 	        switch (pltype) {
 	            case 1:
@@ -400,7 +397,7 @@ public class contract {
 	                return 0.0; // Invalid pltype
 	        }
 	    }
-	    // Check for "pos" values between 4 and 5
+	    
 	    else if (pos >= 4 && pos <= 5) {
 	        switch (pltype) {
 	            case 1:
@@ -422,13 +419,13 @@ public class contract {
 	    
 	 
 	    double ev;
-	    double threshold = x2 * 0.7; // Set the threshold to 70% of x2
+	    double threshold = x2 * 0.7; 
 
 	    if (total <= threshold) {
 	        // Below the threshold, use a square root function for slower initial growth
 	        double normalizedTotal = (double)(total - x1) / (threshold - x1);
 	        double sqrtGrowth = y1 + (Math.sqrt(normalizedTotal) * (y2 - y1));
-	        ev = Math.max(y1, Math.min(sqrtGrowth, y2)); // Clamp between y1 and y2
+	        ev = Math.max(y1, Math.min(sqrtGrowth, y2)); 
 	    } else {
 	        // Above the threshold, use exponential growth
 	        if (total > x2) {
@@ -591,9 +588,6 @@ public class contract {
 		
 
 
-	}
-	public static void tester() { 
-		System.out.println(assists(94, 14, 1, 1));
 	}
 	
 
