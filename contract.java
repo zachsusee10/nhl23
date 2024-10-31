@@ -1,5 +1,3 @@
-package nhl24contract;
-
 import java.util.Scanner;
 import java.util.Random;
 
@@ -41,9 +39,9 @@ public class contract {
 		double ageModifier = 0;
 		double weightPoints = 0, weightAssists = 0, weightGoals = 0, weightPlusMinus = 0;
 	    if (age < 28) {
-	        ageModifier = (28 - age) * 0.3; 
+	        ageModifier = (28 - age) * 0.25; 
 	    } else if (age > 33) {
-	        ageModifier = -(age - 33) * 0.4; 
+	        ageModifier = -(age - 33) * 0.3; 
 	    }
 
 	    // Pot modifier based on pot and age
@@ -116,7 +114,7 @@ public class contract {
 	        performanceModifier += (plusminus - preplusminus) * weightPlusMinus;
 
 	        // Normalize the performance modifier (this can be adjusted for tuning)
-	        performanceModifier *= 0.16;
+	        performanceModifier *= 0.18;
 	    } else if (pos >= 4 && pos <= 5) {
 	    	
         switch (pltype) {
@@ -203,6 +201,11 @@ public class contract {
     // Ensure the overall is within the range [45, 99]
     overall = Math.max(45, Math.min(97, overall));
 
+	// After computing the new overall
+if (overall < ovrpre && (points > prepts || assists > preassists || goals > pregoals) {
+    overall = ovrpre;
+}
+
     return overall;
 }
 	public static int goals(int ovr, int pregoals, int pos, int pltype) {
@@ -237,7 +240,7 @@ public class contract {
 
 	    
 	    Random rand = new Random();
-        double randomFactor = 0.1 + (1.0 - 0.3) * rand.nextDouble();
+        double randomFactor = 0.6 + 0.1 * rand.nextGaussian();
 	    int result = (int) (avg * randomFactor * 65);
 
 	    // Cap values to a maximum of 65, and occasionally let them be higher
@@ -283,7 +286,7 @@ public class contract {
         double avg = (normOvr * weightOvr + normPreassists * weightPreassists) * posMultiplier * pltypeMultiplier;
         
         Random rand = new Random();
-        double randomFactor = 0.1 + (1.0 - 0.3) * rand.nextDouble(); 
+        double randomFactor = 0.6 + 0.1 * rand.nextGaussian();
         
         // Multiplying average with random factor and scaling to 0-100 range
         int result = (int) (avg * randomFactor * 100);
@@ -540,7 +543,6 @@ public class contract {
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
-		tester();
 		int pltype;
 		int pot = 0;
 		System.out.println("What is the name of the player?");
