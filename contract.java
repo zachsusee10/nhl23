@@ -39,9 +39,9 @@ public class contract {
 		double ageModifier = 0;
 		double weightPoints = 0, weightAssists = 0, weightGoals = 0, weightPlusMinus = 0;
 	    if (age < 28) {
-	        ageModifier = (28 - age) * 0.25; 
+	        ageModifier = (28 - age) * 0.3; 
 	    } else if (age > 33) {
-	        ageModifier = -(age - 33) * 0.3; 
+	        ageModifier = -(age - 33) * 0.4; 
 	    }
 
 	    // Pot modifier based on pot and age
@@ -114,7 +114,7 @@ public class contract {
 	        performanceModifier += (plusminus - preplusminus) * weightPlusMinus;
 
 	        // Normalize the performance modifier (this can be adjusted for tuning)
-	        performanceModifier *= 0.18;
+	        performanceModifier *= 0.15;
 	    } else if (pos >= 4 && pos <= 5) {
 	    	
         switch (pltype) {
@@ -202,9 +202,9 @@ public class contract {
     overall = Math.max(45, Math.min(97, overall));
 
 	// After computing the new overall
-if (overall < ovrpre && (points > prepts || assists > preassists || goals > pregoals) {
-    overall = ovrpre;
-}
+//if (overall < ovrpre && (points > prepts || assists > preassists || goals > pregoals)) {
+   // overall = ovrpre;
+//}
 
     return overall;
 }
@@ -425,12 +425,10 @@ if (overall < ovrpre && (points > prepts || assists > preassists || goals > preg
 	    double threshold = x2 * 0.7; 
 
 	    if (total <= threshold) {
-	        // Below the threshold, use a square root function for slower initial growth
 	        double normalizedTotal = (double)(total - x1) / (threshold - x1);
 	        double sqrtGrowth = y1 + (Math.sqrt(normalizedTotal) * (y2 - y1));
 	        ev = Math.max(y1, Math.min(sqrtGrowth, y2)); 
 	    } else {
-	        // Above the threshold, use exponential growth
 	        if (total > x2) {
 	            total = x2;
 	        }
