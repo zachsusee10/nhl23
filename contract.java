@@ -15,7 +15,7 @@ public class contract {
 					retirement=i;
 					return retirement;
 				} else {
-					initialprob = initialprob+.1357;
+					initialprob = initialprob+.05;
 				}
 			}
 			return 0;
@@ -221,26 +221,26 @@ public class contract {
 	        if (pltype == 1 || pltype == 5) {
 	            pltypeMultiplier = 1.2; 
 	        } else if (pltype == 2 || pltype == 3) {
-	            pltypeMultiplier = 1.7;
+	            pltypeMultiplier = 1.6;
 	        }
 	        posMultiplier = 1.5; 
 	    } else if (pos >= 4 && pos <= 5) {
 	        if (pltype == 1) {
 	            pltypeMultiplier = 0.3;
 	        } else if (pltype == 2) {
-	            pltypeMultiplier = 0.9;
+	            pltypeMultiplier = 1.0;
 	        }
-	        posMultiplier = 0.7; 
+	        posMultiplier = 0.8; 
 	    }
 
 	    // Weighted average
-	    double weightOvr = 0.6;
-	    double weightPregoals = 0.4;
+	    double weightOvr = 0.625;
+	    double weightPregoals = 0.375;
 	    double avg = (normOvr * weightOvr + normPregoals * weightPregoals) * posMultiplier * pltypeMultiplier;
 
 	    
 	    Random rand = new Random();
-        double randomFactor = 0.6 + 0.1 * rand.nextGaussian();
+        double randomFactor = 0.5 + 0.05 * rand.nextGaussian();
 	    int result = (int) (avg * randomFactor * 65);
 
 	    // Cap values to a maximum of 65, and occasionally let them be higher
@@ -267,12 +267,12 @@ public class contract {
         if (pos >= 1 && pos <= 3) {
             posMultiplier = 1.5;
             if (pltype == 1) {
-                pltypeMultiplier = 1.7;
+                pltypeMultiplier = 1.6;
             } else if (pltype == 2 || pltype == 3 || pltype == 5) {
                 pltypeMultiplier = 1.2;
             }
         } else if (pos >= 4 && pos <= 5) {
-            posMultiplier = 0.9;
+            posMultiplier = 1.0;
             if (pltype == 1) {
                 pltypeMultiplier = 0.6;
             } else if (pltype == 2) {
@@ -281,12 +281,12 @@ public class contract {
         }
 
         // Weighted average
-        double weightOvr = 0.6; 
-        double weightPreassists = 0.4; 
+        double weightOvr = 0.625; 
+        double weightPreassists = 0.375; 
         double avg = (normOvr * weightOvr + normPreassists * weightPreassists) * posMultiplier * pltypeMultiplier;
         
         Random rand = new Random();
-        double randomFactor = 0.6 + 0.1 * rand.nextGaussian();
+        double randomFactor = 0.5 + 0.05 * rand.nextGaussian();
         
         // Multiplying average with random factor and scaling to 0-100 range
         int result = (int) (avg * randomFactor * 100);
@@ -331,7 +331,7 @@ public class contract {
 
 	    improvementScore = (points - prepoints) * 0.2;
 
-	    double finalScore = 0.8 * performanceScore + 0.2 * improvementScore;
+	    double finalScore = 0.9 * performanceScore + 0.1 * improvementScore;
 	    finalScore = Math.min(Math.max(finalScore, -30), 60);  // clip the value to ensure it doesn't exceed the bounds
 
 	    
