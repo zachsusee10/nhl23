@@ -41,7 +41,7 @@ public class contract {
 	    if (age < 28) {
 	        ageModifier = (28 - age) * 0.3; 
 	    } else if (age > 33) {
-	        ageModifier = -(age - 33) * 0.4; 
+	        ageModifier = -(age - 33) * 0.5; 
 	    }
 
 	    // Pot modifier based on pot and age
@@ -228,19 +228,22 @@ public class contract {
 	        if (pltype == 1) {
 	            pltypeMultiplier = 0.3;
 	        } else if (pltype == 2) {
-	            pltypeMultiplier = 1.0;
+	            pltypeMultiplier = 1.2;
+	        }
+			else if (pltype == 3) {
+	            pltypeMultiplier = 1.1;
 	        }
 	        posMultiplier = 0.8; 
 	    }
 
 	    // Weighted average
-	    double weightOvr = 0.625;
-	    double weightPregoals = 0.375;
+	    double weightOvr = 0.6;
+	    double weightPregoals = 0.4;
 	    double avg = (normOvr * weightOvr + normPregoals * weightPregoals) * posMultiplier * pltypeMultiplier;
 
 	    
 	    Random rand = new Random();
-        double randomFactor = 0.5 + 0.05 * rand.nextGaussian();
+        double randomFactor = 0.45 + 0.05 * rand.nextGaussian();
 	    int result = (int) (avg * randomFactor * 65);
 
 	    // Cap values to a maximum of 65, and occasionally let them be higher
@@ -265,9 +268,9 @@ public class contract {
         double pltypeMultiplier = 1.0;
 
         if (pos >= 1 && pos <= 3) {
-            posMultiplier = 1.5;
+            posMultiplier = 1.3;
             if (pltype == 1) {
-                pltypeMultiplier = 1.6;
+                pltypeMultiplier = 1.5;
             } else if (pltype == 2 || pltype == 3 || pltype == 5) {
                 pltypeMultiplier = 1.2;
             }
@@ -276,17 +279,19 @@ public class contract {
             if (pltype == 1) {
                 pltypeMultiplier = 0.6;
             } else if (pltype == 2) {
-                pltypeMultiplier = 1.6;
-            }
-        }
+                pltypeMultiplier = 1.7;
+            } else if (pltype == 3) {
+                pltypeMultiplier = 1.5;
+
+        }}
 
         // Weighted average
-        double weightOvr = 0.625; 
-        double weightPreassists = 0.375; 
+        double weightOvr = 0.6; 
+        double weightPreassists = 0.4; 
         double avg = (normOvr * weightOvr + normPreassists * weightPreassists) * posMultiplier * pltypeMultiplier;
         
         Random rand = new Random();
-        double randomFactor = 0.5 + 0.05 * rand.nextGaussian();
+        double randomFactor = 0.45 + 0.05 * rand.nextGaussian();
         
         // Multiplying average with random factor and scaling to 0-100 range
         int result = (int) (avg * randomFactor * 100);
@@ -323,9 +328,9 @@ public class contract {
 	            double plusMinusImprovement = preplusminus * 0.2;
 	            performanceScore = (performanceScore + plusMinusImprovement) / 2;
 	        } else if (pltype == 2) {
-	            performanceScore = computePerformanceScore(points, ovr, 105, 70, 50, 3, 3, 3);
+	            performanceScore = computePerformanceScore(points, ovr, 100, 70, 50, 3, 3, 3);
 	        } else if (pltype == 3) {
-	            performanceScore = computePerformanceScore(points, ovr, 100, 65, 50, 3, 3, 3);
+	            performanceScore = computePerformanceScore(points, ovr, 100, 70, 50, 3, 3, 3);
 	        }
 	    }
 
@@ -374,72 +379,62 @@ public class contract {
 		}
 	}
 	public static double EVcalc(int total, int pos, int pltype) {
-	    int x1 = 0, x2 = 0;
-	    double y1 = 0.0, y2 = 0.0;
-	    double exponentBase = 0.0; 
-
-	    
-	    if (pos >= 1 && pos <= 3) {
-	        switch (pltype) {
-	            case 1:
-	                x1 = 90; x2 = 260; y1 = 0.009; y2 = 0.19;
-	                break;
-	            case 2:
-	                x1 = 90; x2 = 250; y1 = 0.009; y2 = 0.19;
-	                break;
-	            case 3:
-	                x1 = 90; x2 = 250; y1 = 0.009; y2 = 0.19;
-	                break;
-	            case 4:
-	                x1 = 90; x2 = 255; y1 = 0.009; y2 = 0.19;
-	                break;
-	            case 5:
-	                x1 = 90; x2 = 150; y1 = 0.009; y2 = 0.10;
-	                break;
-	            default:
-	                return 0.0; // Invalid pltype
-	        }
-	    }
-	    
-	    else if (pos >= 4 && pos <= 5) {
-	        switch (pltype) {
-	            case 1:
-	                x1 = 90; x2 = 170; y1 = 0.009; y2 = 0.12;
-	                break;
-	            case 2:
-	                x1 = 90; x2 = 225; y1 = 0.009; y2 = 0.19;
-	                break;
-	            case 3:
-	                x1 = 90; x2 = 220; y1 = 0.009; y2 = 0.168;
-	                break;
-	            default:
-	                return 0.0; // Invalid pltype for these pos values
-	        }
-	    }
-	    else {
-	        return 0.0; // Invalid pos
-	    }
-	    
-	 
-	    double ev;
-	    double threshold = x2 * 0.7; 
-
-	    if (total <= threshold) {
-	        double normalizedTotal = (double)(total - x1) / (threshold - x1);
-	        double sqrtGrowth = y1 + (Math.sqrt(normalizedTotal) * (y2 - y1));
-	        ev = Math.max(y1, Math.min(sqrtGrowth, y2)); 
-	    } else {
-	        if (total > x2) {
-	            total = x2;
-	        }
-	        // Calculate the base for the exponential function to reach y2 at x2
-	        exponentBase = Math.pow((y2 / y1), 1 / (x2 - threshold));
-	        // Apply the exponential function
-	        ev = y1 * Math.pow(exponentBase, (total - threshold));
-	    }
-
-	    return ev;
+		int x1 = 0, x2 = 0;
+		double y1 = 0.0, y2 = 0.0;
+	
+		// Set x1, x2, y1, y2 based on pos and pltype
+		if (pos >= 1 && pos <= 3) {
+			switch (pltype) {
+				case 1:
+					x1 = 90; x2 = 260; y1 = 0.008; y2 = 0.18;
+					break;
+				case 2:
+					x1 = 90; x2 = 250; y1 = 0.008; y2 = 0.18;
+					break;
+				case 3:
+					x1 = 90; x2 = 250; y1 = 0.008; y2 = 0.18;
+					break;
+				case 4:
+					x1 = 90; x2 = 255; y1 = 0.008; y2 = 0.18;
+					break;
+				case 5:
+					x1 = 90; x2 = 150; y1 = 0.008; y2 = 0.095;
+					break;
+				default:
+					return 0.0; // Invalid pltype
+			}
+		} else if (pos >= 4 && pos <= 5) {
+			switch (pltype) {
+				case 1:
+					x1 = 90; x2 = 170; y1 = 0.008; y2 = 0.11;
+					break;
+				case 2:
+					x1 = 90; x2 = 205; y1 = 0.008; y2 = 0.18;
+					break;
+				case 3:
+					x1 = 90; x2 = 200; y1 = 0.008; y2 = 0.16;
+					break;
+				default:
+					return 0.0; // Invalid pltype
+			}
+		} else {
+			return 0.0; // Invalid pos
+		}
+	
+		if (total <= x1) {
+			return y1;
+		} else if (total >= x2) {
+			return y2;
+		} else {
+			double normalizedTotal = (double)(total - x1) / (x2 - x1);
+			double p = 1.5; // Exponent to adjust the curve shape
+	
+			double ev = y1 + (y2 - y1) * Math.pow(normalizedTotal, p);
+	
+			return ev;
+		}
 	}
+	
 	public static double salarycapmodifier(double salarycap) {
 		salarycap = salarycap + (salarycap*(Math.random()*.04+.01));
 		return salarycap;
