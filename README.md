@@ -49,7 +49,7 @@ cale makar's expected value in year 1 will equate to a 11.0M dollar contract
 
 ## Disclaimer
 
-This project is a **work-in-progress** and is not yet feature-complete. It is currently in a **development phase**, with the primary focus being functionality and user experience improvements. **UPDATE**: I am in the process of changing some of the calculations for the expected contract values, and some aspects are very broken, particularly for defensemen.
+This project is a **work-in-progress** and is not yet feature-complete. It is currently in a **development phase**, with the primary focus being functionality and user experience improvements. **UPDATE (10/31/24)**: I am in the process of changing some of the calculations for the expected contract values, and some aspects are very broken, particularly for defensemen.
 
 
 
